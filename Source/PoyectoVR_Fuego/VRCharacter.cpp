@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TimerManager.h"
 #include "Components/CapsuleComponent.h"
+#include "MotionControllerComponent.h"
 
 
 // Sets default values
@@ -18,6 +19,14 @@ AVRCharacter::AVRCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(VRRoot);
+
+	LeftController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("LeftController"));
+	LeftController->SetupAttachment(VRRoot);
+	LeftController->SetTrackingSource(EControllerHand::Left);
+
+	RightController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("RightController"));
+	RightController->SetupAttachment(VRRoot);
+	RightController->SetTrackingSource(EControllerHand::Right);
 
 	DestinationMarker = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DestinationMarker"));
 	DestinationMarker->SetupAttachment(GetRootComponent());
@@ -47,8 +56,10 @@ void AVRCharacter::Tick(float DeltaTime)
 
 void AVRCharacter::UpdateDestinationMarker()
 {
-	FVector Start = Camera->GetComponentLocation();
-	FVector End = Start + Camera->GetForwardVector() * MaxTeleportDistance;
+	FVector Start = LeftController->GetComponentLocation();
+	FVector Look = LeftController->GetForwardVector();
+	Look = Look.RotateAngleAxis(30, LeftController->GetRightVector());
+	FVector End = Start + Look * MaxTeleportDistance;
 
 	FHitResult HitResult;
 	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility);
