@@ -28,13 +28,18 @@ public:
 
 private:
 
+	bool FindTeleportDestination(TArray<FVector> &OutPath, FVector &OutLocation);
 	void UpdateDestinationMarker();
+	void DrawTeleportPath(const TArray<FVector> &Path);
+	void UpdateSpline(const TArray<FVector> &Path);
 
 	void MoveForward(float throttle);
 	void MoveRight(float throttle);
 
 	void BeginTeleport();
 	void FinishTeleport();
+
+	void StartFade(float FromAlpha, float ToAlpha);
 
 private:
 	UPROPERTY()
@@ -50,13 +55,37 @@ private:
 	class USceneComponent* VRRoot;
 
 	UPROPERTY(VisibleAnywhere)
+	class USplineComponent* TeleportPath;
+
+	UPROPERTY(VisibleAnywhere)
 	class UStaticMeshComponent* DestinationMarker;
 
+	UPROPERTY()
+	TArray<class USplineMeshComponent*> TeleportPathMeshPool;
+
 private:
+	UPROPERTY(EditAnywhere)
+		float TeleportProjectileRadius = 10;
+
+	UPROPERTY(EditAnywhere)
+		float TeleportProjectileSpeed = 800;
+
+	UPROPERTY(EditAnywhere)
+		float TeleportSimulationTime = 2;
+
 	UPROPERTY(EditAnywhere)
 		float MaxTeleportDistance = 1000;
 
 	UPROPERTY(EditAnywhere)
 		float TeleportFadeTime = 1;
+
+	UPROPERTY(EditAnywhere)
+		FVector TeleportProjectionExtent = FVector(100, 100, 100);
+
+	UPROPERTY(EditDefaultsOnly)
+		class UStaticMesh* TeleportArchMesh;
+
+	UPROPERTY(EditDefaultsOnly)
+		class UMaterialInterface* TeleportArchMaterial;
 
 };
