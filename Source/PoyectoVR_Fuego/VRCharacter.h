@@ -52,6 +52,9 @@ private:
 	class UMotionControllerComponent* RightController;
 
 	UPROPERTY()
+	class UMotionControllerComponent* Tracker;
+
+	UPROPERTY()
 	class USceneComponent* VRRoot;
 
 	UPROPERTY(VisibleAnywhere)
