@@ -33,9 +33,9 @@ AVRCharacter::AVRCharacter()
 	RightController->SetupAttachment(VRRoot);
 	RightController->SetTrackingSource(EControllerHand::Right);
 
-	//Tracker = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("Tracker"));
-	//Tracker->SetupAttachment(VRRoot);
-	//Tracker->SetTrackingSource(EControllerHand::Special_1);
+	Tracker = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("Tracker"));
+	Tracker->SetupAttachment(VRRoot);
+	Tracker->SetTrackingSource(EControllerHand::Special_1);
 
 	TeleportPath = CreateDefaultSubobject<USplineComponent>(TEXT("TeleportPath"));
 	TeleportPath->SetupAttachment(LeftController);
