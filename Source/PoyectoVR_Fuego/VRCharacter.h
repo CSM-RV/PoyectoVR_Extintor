@@ -48,11 +48,11 @@ private:
 	UPROPERTY()
 	class UMotionControllerComponent* LeftController;
 
-	UPROPERTY()
-	class UMotionControllerComponent* RightController;
+	//UPROPERTY()
+	//class UMotionControllerComponent* RightController;
 
-	UPROPERTY()
-	class UMotionControllerComponent* Tracker;
+	//UPROPERTY()
+	//class UMotionControllerComponent* Tracker;
 
 	UPROPERTY()
 	class USceneComponent* VRRoot;
